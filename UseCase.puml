@@ -1,0 +1,48 @@
+@startuml
+
+    title Annie - Use Case Diagram
+
+    rectangle "Profile API" {
+        (Login)
+        (Update) as PUPDATE
+        (Register) as PREG
+        (Delete) as PDELETE
+        (Create) as PCREATE
+        (Passsword Reset) as PR
+    }
+
+    rectangle "Job API" {
+        (Create) as JCREATE
+        (Update) as JUPDATE
+        (Complete) as JCOMP
+        (View) as JVIEW
+    }
+    database db 
+    node node
+
+    :Subcontractor:
+    :Employee: 
+    :Client:
+    :Supervisor:
+    :Vendor:
+
+    Employee --> (Login)
+    Supervisor --> (Login) 
+    Employee --> JCREATE
+    Supervisor --> JCREATE
+    Subcontractor --> JUPDATE
+    Subcontractor --> (Login)
+    Subcontractor --> PREG
+    Subcontractor --> PUPDATE
+    Employee --> JUPDATE
+    Employee --> PUPDATE
+    Supervisor --> JCOMP
+    Client ..> (Login) 
+    Client ..> JVIEW
+    Supervisor ---> PCREATE: Role
+    Supervisor ---> PDELETE
+    Supervisor ---> PUPDATE
+    Client ..> PREG
+    Client ..> PUPDATE
+    Client ..> PR
+@enduml
