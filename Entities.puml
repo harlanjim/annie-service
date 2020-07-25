@@ -12,6 +12,7 @@ entity "User" as user {
   *username : text
   *hash_password : text
   *salt : text
+  *role : text
   locked : boolean
   profile_id : number <<FK>>
 }
@@ -44,16 +45,10 @@ entity "Profile" as profile {
   other_details : text
 }
 
-entity "Entity03" as e03 {
-  *e3_id : number <<generated>>
-  --
-  e1_id : number <<FK>>
-  other_details : text
-}
 
 user ||..o{ usersession
 user ||..|| profile
 user ||..o{ useractivity
-e01 |o..o{ e03
+' e01 |o..o{ e03
 
 @enduml
