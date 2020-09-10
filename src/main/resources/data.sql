@@ -1,1 +1,1 @@
-insert into "public"."annieuser" (id, active, password, roles, user_name) values (nextval('myuser_id_seq'), true, 'pass', 'USER', 'jim');
+insert into "public"."annieuser" (id, active, password, roles, user_name) values (nextval('annieuser_id_seq'), true, 'pass', 'USER', 'jim');
