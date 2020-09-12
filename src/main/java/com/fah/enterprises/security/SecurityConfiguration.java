@@ -35,19 +35,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 			.antMatchers("/admin/**").hasAnyRole("ADMIN")
 			.antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
-			.antMatchers("/authenticate").permitAll().
-			anyRequest().authenticated().and().
-			exceptionHandling().and().sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+			.antMatchers("/authenticate").permitAll()
+			.anyRequest().authenticated().and()
+			.exceptionHandling().and().sessionManagement()
+			.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-//			.antMatchers("/admin/**").hasAnyRole("ADMIN")
-//			.antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
-//			.antMatchers("/**").permitAll()
-//			.and().formLogin();
-		/*
-		 * 		httpSecurity.csrf().disable()
-				.authorizeRequests()
-		 */
 	}
 	
 	@Override
