@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fah.enterprises.models.AuthenticationRequest;
 import com.fah.enterprises.models.AuthenticationResponse;
+import com.fah.enterprises.models.RegistrationRequest;
+import com.fah.enterprises.services.UserService;
 import com.fah.enterprises.utils.JwtUtil;
 
 @RestController
@@ -23,7 +25,7 @@ public class HomeResource {
 	private AuthenticationManager authenticationManager;
 
 	@Autowired
-	private UserDetailsService userDetailsService;
+	private UserService userDetailsService;
 	
 	@Autowired
 	private JwtUtil jwtTokenUtil;
@@ -60,5 +62,12 @@ public class HomeResource {
 
 		return ResponseEntity.ok(new AuthenticationResponse(jwt));
 	}
+	
+	@PostMapping(value = "/registration")
+	public void createRegistration(@RequestBody RegistrationRequest registrationRequest)
+			throws Exception {
+		
+		userDetailsService.userRegistration(registrationRequest);
 
+	}
 }
