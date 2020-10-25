@@ -1,5 +1,6 @@
 package com.fah.enterprises.services;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +12,20 @@ import org.springframework.stereotype.Service;
 
 import com.fah.enterprises.exceptions.UsernameFoundException;
 import com.fah.enterprises.models.AnnieUserDetails;
+import com.fah.enterprises.models.Phone;
+import com.fah.enterprises.models.Profile;
 import com.fah.enterprises.models.RegistrationRequest;
 import com.fah.enterprises.models.User;
+import com.fah.enterprises.repositories.ProfileRepository;
 import com.fah.enterprises.repositories.UserRepository;
 @Service
 public class UserService implements UserDetailsService{
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	ProfileRepository profileRepository;
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
@@ -45,7 +52,17 @@ public class UserService implements UserDetailsService{
 		
 		tempUser.setRoles("ROLE_USER");
 		
-		userRepository.save(tempUser);
+	//	userRepository.save(tempUser);
+		
+		Profile profile = new Profile();
+		profile.setFirstName(request.getFirstName());
+		profile.setLastName(request.getLastName());
+		profile.setEmail(request.getEmail());
+		profile.setPhone(new ArrayList<Phone>());
+		profile.getPhone().add(new Phone(request.getPhone(), request.getPhoneType()));
+		profile.setUser(tempUser);
+		
+		profileRepository.save(profile);
 		return null;
 	}
 
