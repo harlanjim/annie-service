@@ -1,10 +1,15 @@
 package com.fah.enterprises.models;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -20,9 +25,18 @@ public class User {
 	@Column(name = "password")
 	private String password;
 	
-	@Column(name = "roles")
-	private String roles;
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "user_id", nullable = false)
+	private List<Role> roles;
 	
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+
 	@Column(name = "active")
 	private boolean active;
 
@@ -48,14 +62,6 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getRoles() {
-		return roles;
-	}
-
-	public void setRoles(String roles) {
-		this.roles = roles;
 	}
 
 	public boolean isActive() {

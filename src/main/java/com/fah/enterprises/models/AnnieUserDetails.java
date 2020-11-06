@@ -1,6 +1,5 @@
 package com.fah.enterprises.models;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,8 +19,9 @@ public class AnnieUserDetails implements UserDetails {
 		this.username = user.getUserName();
 		this.password = user.getPassword();
 		this.active = user.isActive();
-		this.authorities = Arrays.stream(user.getRoles().split(","))
+		this.authorities = user.getRoles().stream().map(r -> r.getRoleName())
 				.map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+				
 	}
 	
 	@Override

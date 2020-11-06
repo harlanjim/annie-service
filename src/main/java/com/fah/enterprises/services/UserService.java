@@ -15,8 +15,10 @@ import com.fah.enterprises.models.AnnieUserDetails;
 import com.fah.enterprises.models.Phone;
 import com.fah.enterprises.models.Profile;
 import com.fah.enterprises.models.RegistrationRequest;
+import com.fah.enterprises.models.Role;
 import com.fah.enterprises.models.User;
 import com.fah.enterprises.repositories.ProfileRepository;
+import com.fah.enterprises.repositories.RoleRepository;
 import com.fah.enterprises.repositories.UserRepository;
 @Service
 public class UserService implements UserDetailsService{
@@ -26,6 +28,9 @@ public class UserService implements UserDetailsService{
 	
 	@Autowired
 	ProfileRepository profileRepository;
+	
+	@Autowired
+	RoleRepository roleRepository;
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
@@ -49,8 +54,8 @@ public class UserService implements UserDetailsService{
 		tempUser.setPassword(passwordEncoder.encode(request.getPassword()));
 		
 		tempUser.setActive(true);
-		
-		tempUser.setRoles("ROLE_USER");
+		tempUser.setRoles(new ArrayList<Role>());
+		tempUser.getRoles().add(new Role("ROLE_USER"));
 		
 	//	userRepository.save(tempUser);
 		
@@ -65,5 +70,4 @@ public class UserService implements UserDetailsService{
 		profileRepository.save(profile);
 		return null;
 	}
-
 }
