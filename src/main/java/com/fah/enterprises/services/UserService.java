@@ -1,6 +1,7 @@
 package com.fah.enterprises.services;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,5 +70,24 @@ public class UserService implements UserDetailsService{
 		
 		profileRepository.save(profile);
 		return null;
+	}
+
+	/*
+	 * Save information to the user table based on authentication success or failure
+	 */
+	public void saveAuthenticationResult(String username, boolean successFlag) {
+		Optional<User> optUser = userRepository.findByUserName(username);
+		if (optUser.isPresent()) {
+			User user = optUser.get();
+			if (successFlag) {
+				user.setLastLoginTs(new Date());
+				user.setBadAuthenticationRequests(0L);
+			}
+			else {
+				long cnt = (user.getBadAuthenticationRequests() == null)? 0L : user.getBadAuthenticationRequests();
+				user.setBadAuthenticationRequests(cnt + 1L);
+			}
+			userRepository.save(user);
+		}
 	}
 }
