@@ -86,6 +86,7 @@ public class UserService implements UserDetailsService{
 			else {
 				long cnt = (user.getBadAuthenticationRequests() == null)? 0L : user.getBadAuthenticationRequests();
 				user.setBadAuthenticationRequests(cnt + 1L);
+				user.setLastLoginAttemptTs(new Date());
 			}
 			userRepository.save(user);
 		}

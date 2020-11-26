@@ -44,6 +44,9 @@ public class User {
 	
 	@Column(name = "bad_auth_reqs", nullable = true)
 	private Long badAuthenticationRequests;
+	
+	@Column(name = "last_login_attmpt_ts", nullable = true)
+	private Date lastLoginAttemptTs;
 
 	public int getId() {
 		return id;
@@ -115,6 +118,14 @@ public class User {
 
 	public void setBadAuthenticationRequests(Long badAuthenticationRequests) {
 		this.badAuthenticationRequests = badAuthenticationRequests;
+	}
+
+	public Date getLastLoginAttemptTs() {
+		return lastLoginAttemptTs;
+	}
+
+	public void setLastLoginAttemptTs(Date lastLoginAttemptTs) {
+		this.lastLoginAttemptTs = lastLoginAttemptTs;
 	}
 
 }
