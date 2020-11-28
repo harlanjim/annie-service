@@ -50,15 +50,18 @@ public class UserService implements UserDetailsService{
 			throw new UsernameFoundException(request.getUsername() + "Found in Database");
 		}
 		
+		String lRoleName = "ROLE_USER";
+		if (profileRepository.count() < 1L) {
+			lRoleName = "ROLE_ADMIN";
+		}
+		
 		User tempUser = new User();
 		tempUser.setUserName(request.getUsername());
 		tempUser.setPassword(passwordEncoder.encode(request.getPassword()));
 		
 		tempUser.setActive(true);
 		tempUser.setRoles(new ArrayList<Role>());
-		tempUser.getRoles().add(new Role("ROLE_USER"));
-		
-	//	userRepository.save(tempUser);
+		tempUser.getRoles().add(new Role(lRoleName));
 		
 		Profile profile = new Profile();
 		profile.setFirstName(request.getFirstName());
