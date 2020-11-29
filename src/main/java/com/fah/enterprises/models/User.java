@@ -1,5 +1,6 @@
 package com.fah.enterprises.models;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -28,17 +29,24 @@ public class User {
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id", nullable = false)
 	private List<Role> roles;
-	
-	public List<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
-	}
 
 	@Column(name = "active")
 	private boolean active;
+	
+	@Column(name = "last_login_ts", nullable = true)
+	private Date lastLoginTs;
+	
+	@Column(name = "activation_req_ts", nullable = true)
+	private Date activationRequestTs;
+
+	@Column(name = "password_reset_req_ts", nullable = true)
+	private Date passwordResetRequestTs;
+	
+	@Column(name = "bad_auth_reqs", nullable = true)
+	private Long badAuthenticationRequests;
+	
+	@Column(name = "last_login_attmpt_ts", nullable = true)
+	private Date lastLoginAttemptTs;
 
 	public int getId() {
 		return id;
@@ -70,6 +78,54 @@ public class User {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+	
+	public Date getLastLoginTs() {
+		return lastLoginTs;
+	}
+
+	public void setLastLoginTs(Date lastLoginTs) {
+		this.lastLoginTs = lastLoginTs;
+	}
+
+	public Date getActivationRequestTs() {
+		return activationRequestTs;
+	}
+
+	public void setActivationRequestTs(Date activationRequestTs) {
+		this.activationRequestTs = activationRequestTs;
+	}
+
+	public Date getPasswordResetRequestTs() {
+		return passwordResetRequestTs;
+	}
+
+	public void setPasswordResetRequestTs(Date passwordResetRequestTs) {
+		this.passwordResetRequestTs = passwordResetRequestTs;
+	}
+	
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+
+	public Long getBadAuthenticationRequests() {
+		return badAuthenticationRequests;
+	}
+
+	public void setBadAuthenticationRequests(Long badAuthenticationRequests) {
+		this.badAuthenticationRequests = badAuthenticationRequests;
+	}
+
+	public Date getLastLoginAttemptTs() {
+		return lastLoginAttemptTs;
+	}
+
+	public void setLastLoginAttemptTs(Date lastLoginAttemptTs) {
+		this.lastLoginAttemptTs = lastLoginAttemptTs;
 	}
 
 }

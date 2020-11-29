@@ -1,6 +1,7 @@
 package com.fah.enterprises.services;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,15 +50,18 @@ public class UserService implements UserDetailsService{
 			throw new UsernameFoundException(request.getUsername() + "Found in Database");
 		}
 		
+		String lRoleName = "ROLE_USER";
+		if (profileRepository.count() < 1L) {
+			lRoleName = "ROLE_ADMIN";
+		}
+		
 		User tempUser = new User();
 		tempUser.setUserName(request.getUsername());
 		tempUser.setPassword(passwordEncoder.encode(request.getPassword()));
 		
 		tempUser.setActive(true);
 		tempUser.setRoles(new ArrayList<Role>());
-		tempUser.getRoles().add(new Role("ROLE_USER"));
-		
-	//	userRepository.save(tempUser);
+		tempUser.getRoles().add(new Role(lRoleName));
 		
 		Profile profile = new Profile();
 		profile.setFirstName(request.getFirstName());
@@ -69,5 +73,25 @@ public class UserService implements UserDetailsService{
 		
 		profileRepository.save(profile);
 		return null;
+	}
+
+	/*
+	 * Save information to the user table based on authentication success or failure
+	 */
+	public void saveAuthenticationResult(String username, boolean successFlag) {
+		Optional<User> optUser = userRepository.findByUserName(username);
+		if (optUser.isPresent()) {
+			User user = optUser.get();
+			if (successFlag) {
+				user.setLastLoginTs(new Date());
+				user.setBadAuthenticationRequests(0L);
+			}
+			else {
+				long cnt = (user.getBadAuthenticationRequests() == null)? 0L : user.getBadAuthenticationRequests();
+				user.setBadAuthenticationRequests(cnt + 1L);
+				user.setLastLoginAttemptTs(new Date());
+			}
+			userRepository.save(user);
+		}
 	}
 }
