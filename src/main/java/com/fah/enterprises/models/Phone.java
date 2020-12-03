@@ -10,6 +10,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "phone")
 public class Phone {
+	
+	public Phone() {
+		super();
+	}
+	
 	public Phone(String phoneNumber, String phoneType) {
 		super();
 		this.phoneNumber = phoneNumber;

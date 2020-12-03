@@ -13,6 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "profile")
 public class Profile {
@@ -48,6 +50,10 @@ public class Profile {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id", nullable = true)
 	private User user;
+	
+	@JsonIgnore
+	@Column(name = "user_id", insertable = false, updatable = false)
+	private Integer userId;
 
 	public int getId() {
 		return id;
@@ -128,4 +134,13 @@ public class Profile {
 	public void setUser(User user) {
 		this.user = user;
 	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
 }

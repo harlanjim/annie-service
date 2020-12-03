@@ -1,18 +1,24 @@
 package com.fah.enterprises.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fah.enterprises.models.AuthenticationRequest;
 import com.fah.enterprises.models.AuthenticationResponse;
+import com.fah.enterprises.models.Profile;
 import com.fah.enterprises.models.RegistrationRequest;
 import com.fah.enterprises.services.UserService;
 import com.fah.enterprises.utils.JwtUtil;
@@ -29,15 +35,6 @@ public class HomeResource {
 	@Autowired
 	private JwtUtil jwtTokenUtil;
 
-	@GetMapping("/test")
-	public String home() {
-		return "<h1>Hello</h1>";
-	}
-
-	@GetMapping("/user")
-	public String user() {
-		return "<h1>Hello User</h1>";
-	}
 
 	@GetMapping("/admin")
 	public String admin() {
@@ -71,5 +68,24 @@ public class HomeResource {
 		
 		userDetailsService.userRegistration(registrationRequest);
 
+	}
+	
+	// Get the logged in user.
+	@GetMapping(value = "/user")
+	public Profile getUser(Authentication authentication)
+			throws Exception {
+		return userDetailsService.getProfileByUsername(authentication.getName());
+	}
+	
+	@GetMapping(value = "/profile/{id}")
+	public Profile getProfile(@PathVariable("id") int id)
+			throws Exception {
+		return userDetailsService.getProfileById(id);
+	}
+	
+	@GetMapping(value = "/profiles")
+	public List<Profile> getProfiles()
+			throws Exception {
+		return userDetailsService.getProfiles();
 	}
 }

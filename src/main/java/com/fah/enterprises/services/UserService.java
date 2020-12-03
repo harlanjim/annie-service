@@ -2,6 +2,7 @@ package com.fah.enterprises.services;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fah.enterprises.exceptions.UsernameFoundException;
 import com.fah.enterprises.models.AnnieUserDetails;
@@ -43,6 +46,7 @@ public class UserService implements UserDetailsService{
 		return user.map(AnnieUserDetails::new).get();
 	}
 	
+	@Transactional(propagation = Propagation.REQUIRED)
 	public Integer userRegistration(RegistrationRequest request) throws UsernameFoundException {
 		
 		Optional<User> user = userRepository.findByUserName(request.getUsername());
@@ -93,5 +97,25 @@ public class UserService implements UserDetailsService{
 			}
 			userRepository.save(user);
 		}
+	}
+	
+	public Profile getProfileByUsername (String username) {
+		Optional<User> optUser = userRepository.findByUserName(username);
+		if (optUser.isPresent()) {
+			User user = optUser.get();
+			Optional<Profile> optProfile = profileRepository.findByUserId(user.getId());
+			if (optProfile.isPresent()) {
+				return optProfile.get();
+			}
+		}
+		return null;
+	}
+
+	public Profile getProfileById(Integer id) {
+		return profileRepository.findById(id).get();
+	}
+
+	public List<Profile> getProfiles() {
+		return profileRepository.findAll();
 	}
 }
