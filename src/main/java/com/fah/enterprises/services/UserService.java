@@ -15,12 +15,12 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fah.enterprises.exceptions.UsernameFoundException;
-import com.fah.enterprises.models.AnnieUserDetails;
 import com.fah.enterprises.models.Phone;
 import com.fah.enterprises.models.Profile;
-import com.fah.enterprises.models.RegistrationRequest;
 import com.fah.enterprises.models.Role;
 import com.fah.enterprises.models.User;
+import com.fah.enterprises.models.security.AnnieUserDetails;
+import com.fah.enterprises.models.security.RegistrationRequest;
 import com.fah.enterprises.repositories.ProfileRepository;
 import com.fah.enterprises.repositories.RoleRepository;
 import com.fah.enterprises.repositories.UserRepository;

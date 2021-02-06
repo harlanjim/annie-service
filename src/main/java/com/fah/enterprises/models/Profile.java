@@ -55,6 +55,22 @@ public class Profile {
 	@Column(name = "user_id", insertable = false, updatable = false)
 	private Integer userId;
 
+	public Profile() {
+		super();
+	}
+	
+	public Profile(ProfileApi profileApi) {
+		super();
+		this.id = profileApi.getId();
+		this.firstName = profileApi.getFirstName();
+		this.lastName = profileApi.getLastName();
+		this.email = profileApi.getEmail();
+		this.address = profileApi.getAddress();
+		this.city = profileApi.getCity();
+		this.country = profileApi.getCountry();
+		this.phone = profileApi.getPhone();
+	}
+	
 	public int getId() {
 		return id;
 	}

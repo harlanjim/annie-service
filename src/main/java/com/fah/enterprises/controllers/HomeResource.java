@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fah.enterprises.models.AuthenticationRequest;
-import com.fah.enterprises.models.AuthenticationResponse;
 import com.fah.enterprises.models.Profile;
-import com.fah.enterprises.models.RegistrationRequest;
+import com.fah.enterprises.models.security.AuthenticationRequest;
+import com.fah.enterprises.models.security.AuthenticationResponse;
+import com.fah.enterprises.models.security.RegistrationRequest;
 import com.fah.enterprises.services.UserService;
 import com.fah.enterprises.utils.JwtUtil;
 

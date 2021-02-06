@@ -1,4 +1,4 @@
-package com.fah.enterprises.models;
+package com.fah.enterprises.models.security;
 
 import java.io.Serializable;
 
