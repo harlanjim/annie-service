@@ -2,7 +2,6 @@ package com.fah.enterprises.services;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,13 +108,5 @@ public class UserService implements UserDetailsService{
 			}
 		}
 		return null;
-	}
-
-	public Profile getProfileById(Integer id) {
-		return profileRepository.findById(id).get();
-	}
-
-	public List<Profile> getProfiles() {
-		return profileRepository.findAll();
 	}
 }

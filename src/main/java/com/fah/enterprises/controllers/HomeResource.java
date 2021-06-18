@@ -77,15 +77,4 @@ public class HomeResource {
 		return userDetailsService.getProfileByUsername(authentication.getName());
 	}
 	
-	@GetMapping(value = "/profile/{id}")
-	public Profile getProfile(@PathVariable("id") int id)
-			throws Exception {
-		return userDetailsService.getProfileById(id);
-	}
-	
-	@GetMapping(value = "/profiles")
-	public List<Profile> getProfiles()
-			throws Exception {
-		return userDetailsService.getProfiles();
-	}
 }
